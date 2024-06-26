@@ -1,15 +1,15 @@
 const Enrollment = require('../models/enrollment');
-const CourseYear = require('../models/courseYear');
+const CourseDetail = require('../models/courseDetail');
 const Course = require('../models/course');
-const User = require('../models/user');
+const Teacher = require('../models/teacher');
 
 exports.list = async () => {
   return await Enrollment.find().populate('student').populate({
-    path: 'courseyear',
-    model: CourseYear,
+    path: 'courseDetail',
+    model: CourseDetail,
     populate: [
       { path: 'course', model: Course },
-      { path: 'teacher', model: User }
+      { path: 'teacher', model: Teacher }
     ]
   });
 }
@@ -17,11 +17,11 @@ exports.list = async () => {
 exports.listByStudent = async (studentId) => {
   try {
     const enrollments = await Enrollment.find({ student: studentId }).populate('student').populate({
-      path: 'courseyear',
-      model: CourseYear,
+      path: 'courseDetail',
+      model: CourseDetail,
       populate: [
         { path: 'course', model: Course },
-        { path: 'teacher', model: User }
+        { path: 'teacher', model: Teacher }
       ]
     });
 
@@ -35,11 +35,11 @@ exports.listByStudent = async (studentId) => {
 exports.listActiveByStudent = async (studentId) => {
   try {
     const enrollments = await Enrollment.find({ student: studentId, status: true }).populate('student').populate({
-      path: 'courseyear',
-      model: CourseYear,
+      path: 'courseDetail',
+      model: CourseDetail,
       populate: [
         { path: 'course', model: Course },
-        { path: 'teacher', model: User }
+        { path: 'teacher', model: Teacher }
       ]
     });
 

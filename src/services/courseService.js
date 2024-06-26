@@ -1,7 +1,7 @@
 const Course = require('../models/course')
 
 exports.getAll = async () => {
-    return await Course.find();
+    return await Course.find().populate('grade');
 }
 
 exports.save = async (data) => {
