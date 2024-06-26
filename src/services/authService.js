@@ -1,23 +1,25 @@
 // services/userService.js
 const Student = require('../models/student');
+const Teacher = require('../models/teacher');
+const Admin = require('../models/admin');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const login = async (email, password) => {
     // Intenta encontrar el usuario en la colección de estudiantes
     let usuario = await Student.findOne({ email });
-    let userType = 'student'; // Definir el tipo de usuario como estudiante por defecto
+    let userType = 'student'; 
 
     if (!usuario) {
-        // Si no se encuentra en estudiantes, intenta en la colección de profesores
+        
         usuario = await Teacher.findOne({ email });
-        userType = 'teacher'; // Cambiar el tipo de usuario a profesor si se encuentra
+        userType = 'teacher';
     }
 
     if (!usuario) {
-        // Si no se encuentra en profesores, intenta en la colección de administradores
+      
         usuario = await Admin.findOne({ email });
-        userType = 'admin'; // Cambiar el tipo de usuario a administrador si se encuentra
+        userType = 'admin';
     }
 
     if (!usuario) {
